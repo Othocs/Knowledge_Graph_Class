@@ -1,0 +1,12 @@
+[project]
+name = "ecommerce-graph-api"
+version = "1.0.0"
+description = "E-Commerce Graph Recommendations API with PostgreSQL and Neo4j"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.109.0",
+    "uvicorn[standard]==0.27.0",
+    "psycopg2-binary==2.9.9",
+    "neo4j==5.16.0",
+    "pandas==2.2.0",
+]
