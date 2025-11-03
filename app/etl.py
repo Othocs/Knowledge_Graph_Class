@@ -117,20 +117,135 @@ def etl():
     # Get path to Cypher schema file
     queries_path = Path(__file__).with_name("queries.cypher")
 
-    # TODO: Implement the ETL logic here
-    # 1. Connect to Neo4j
-    # 2. Run schema setup from queries.cypher
-    # 3. Connect to PostgreSQL and extract data
-    # 4. Load data into Neo4j in the correct order:
-    #    - Categories
-    #    - Products (with IN_CATEGORY relationships)
-    #    - Customers
-    #    - Orders (with PLACED relationships)
-    #    - Order items (with CONTAINS relationships)
-    #    - Events (with dynamic relationship types)
+    print("Starting ETL process...")
 
-    pass
-    #  code here
+    # 1. Connect to Neo4j
+    print("Connecting to Neo4j...")
+    driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+
+    try:
+        # 2. Run schema setup from queries.cypher
+        print("Setting up Neo4j schema (constraints and indexes)...")
+        run_cypher_file(driver, queries_path)
+        print("✓ Schema setup complete")
+
+        # 3. Connect to PostgreSQL and extract data
+        print("Connecting to PostgreSQL and extracting data...")
+        pg_conn = psycopg2.connect(**POSTGRES_CONFIG)
+
+        # Extract all tables
+        categories_df = pd.read_sql("SELECT * FROM categories", pg_conn)
+        products_df = pd.read_sql("SELECT * FROM products", pg_conn)
+        customers_df = pd.read_sql("SELECT * FROM customers", pg_conn)
+        orders_df = pd.read_sql("SELECT * FROM orders", pg_conn)
+        order_items_df = pd.read_sql("SELECT * FROM order_items", pg_conn)
+        events_df = pd.read_sql("SELECT * FROM events", pg_conn)
+
+        pg_conn.close()
+        print(f"✓ Extracted: {len(categories_df)} categories, {len(products_df)} products, "
+              f"{len(customers_df)} customers, {len(orders_df)} orders, "
+              f"{len(order_items_df)} order items, {len(events_df)} events")
+
+        # 4. Load data into Neo4j in the correct order
+
+        # Step 1: Create Category nodes
+        print("Loading categories...")
+        for _, row in categories_df.iterrows():
+            run_cypher(driver, """
+                MERGE (cat:Category {id: $id})
+                SET cat.name = $name
+            """, {"id": row["id"], "name": row["name"]})
+        print(f"✓ Loaded {len(categories_df)} categories")
+
+        # Step 2: Create Product nodes with IN_CATEGORY relationships
+        print("Loading products with category relationships...")
+        for _, row in products_df.iterrows():
+            run_cypher(driver, """
+                MERGE (p:Product {id: $id})
+                SET p.name = $name, p.price = $price
+                WITH p
+                MATCH (cat:Category {id: $category_id})
+                MERGE (p)-[:IN_CATEGORY]->(cat)
+            """, {
+                "id": row["id"],
+                "name": row["name"],
+                "price": float(row["price"]),
+                "category_id": row["category_id"]
+            })
+        print(f"✓ Loaded {len(products_df)} products")
+
+        # Step 3: Create Customer nodes
+        print("Loading customers...")
+        for _, row in customers_df.iterrows():
+            run_cypher(driver, """
+                MERGE (c:Customer {id: $id})
+                SET c.name = $name, c.join_date = $join_date
+            """, {
+                "id": row["id"],
+                "name": row["name"],
+                "join_date": str(row["join_date"])
+            })
+        print(f"✓ Loaded {len(customers_df)} customers")
+
+        # Step 4: Create Order nodes with PLACED relationships
+        print("Loading orders with customer relationships...")
+        for _, row in orders_df.iterrows():
+            run_cypher(driver, """
+                MERGE (o:Order {id: $id})
+                SET o.ts = $ts
+                WITH o
+                MATCH (c:Customer {id: $customer_id})
+                MERGE (c)-[:PLACED]->(o)
+            """, {
+                "id": row["id"],
+                "ts": str(row["ts"]),
+                "customer_id": row["customer_id"]
+            })
+        print(f"✓ Loaded {len(orders_df)} orders")
+
+        # Step 5: Create CONTAINS relationships between orders and products
+        print("Creating order-product relationships...")
+        for _, row in order_items_df.iterrows():
+            run_cypher(driver, """
+                MATCH (o:Order {id: $order_id})
+                MATCH (p:Product {id: $product_id})
+                MERGE (o)-[r:CONTAINS]->(p)
+                SET r.quantity = $quantity
+            """, {
+                "order_id": row["order_id"],
+                "product_id": row["product_id"],
+                "quantity": int(row["quantity"])
+            })
+        print(f"✓ Created {len(order_items_df)} order-product relationships")
+
+        # Step 6: Create dynamic event relationships
+        print("Creating event relationships...")
+        event_type_map = {
+            "view": "VIEW",
+            "click": "CLICK",
+            "add_to_cart": "ADD_TO_CART"
+        }
+
+        for _, row in events_df.iterrows():
+            rel_type = event_type_map.get(row["event_type"], "VIEW")
+            run_cypher(driver, f"""
+                MATCH (c:Customer {{id: $customer_id}})
+                MATCH (p:Product {{id: $product_id}})
+                MERGE (c)-[r:{rel_type}]->(p)
+                SET r.ts = $ts, r.event_id = $event_id
+            """, {
+                "customer_id": row["customer_id"],
+                "product_id": row["product_id"],
+                "ts": str(row["ts"]),
+                "event_id": row["id"]
+            })
+        print(f"✓ Created {len(events_df)} event relationships")
+
+        print("✓ ETL process completed successfully")
+
+    finally:
+        # Clean up connections
+        driver.close()
 
 
 if __name__ == "__main__":
