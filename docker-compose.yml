@@ -73,6 +73,36 @@ services:
     networks:
       - tp2-network
 
+  checks:
+    image: ubuntu:22.04
+    container_name: tp2-checks
+    profiles: ["test"]
+    volumes:
+      - ./scripts:/scripts:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      CONTAINER_MODE: "true"
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shop
+    depends_on:
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      app:
+        condition: service_started
+    networks:
+      - tp2-network
+    command: >
+      bash -c "
+        apt-get update -qq &&
+        apt-get install -y -qq curl postgresql-client docker.io > /dev/null 2>&1 &&
+        echo 'Running tests...' &&
+        bash /scripts/check_containers.sh
+      "
+
 volumes:
   postgres_data:
   neo4j_logs:

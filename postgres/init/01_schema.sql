@@ -29,7 +29,6 @@ CREATE TABLE order_items (
   PRIMARY KEY (order_id, product_id)
 );
 
--- Optional: behavioral events for CF and embeddings
 CREATE TABLE events (
   id TEXT PRIMARY KEY,
   customer_id TEXT REFERENCES customers(id),
