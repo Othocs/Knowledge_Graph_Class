@@ -8,8 +8,8 @@ Each TP follows a similar structure using Docker containers for Neo4j graph data
 
 ## Completed TPs
 
-- **[TP2](./TP2/README.md)** - Advanced graph queries and data loading
-- **[TP3](./TP3/README.md)** - Twitter Network Analysis with Graph Data Science algorithms
+- # [TP2 - Advanced graph queries and data loading](./TP2/README.md)
+- # [TP3 - Twitter Network Analysis with Graph Data Science algorithms](./TP3/README.md)
 
 ## Quick Start
 
