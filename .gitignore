@@ -1,14 +1,34 @@
-# Neo4j runtime data
-neo4j/data/
-neo4j/logs/
+# Neo4j runtime data (match in all TP directories)
+**/neo4j/data/
+**/neo4j/logs/
+!**/neo4j/data/.gitkeep
+!**/neo4j/logs/.gitkeep
 
 # Python cache
 __pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Python environments
+.Python
+env/
+venv/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
 
 # Environment files
 .env
 
-# Virtual environments
-.venv
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
 
 
