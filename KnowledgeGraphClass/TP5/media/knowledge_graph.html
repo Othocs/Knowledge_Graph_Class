@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#FF6B6B", "font": {"color": "white"}, "id": "Albert Einstein", "label": "Albert Einstein", "shape": "dot", "size": 30}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Hermann Einstein", "label": "Hermann Einstein", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Elektrotechnische Fabrik J. Einstein \u0026 Cie", "label": "Elektrotechnische Fabrik J. Einstein \u0026 Cie", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Switzerland", "label": "Switzerland", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "German Empire", "label": "German Empire", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Munich", "label": "Munich", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Kingdom of W\u00fcrttemberg", "label": "Kingdom of W\u00fcrttemberg", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Pauline Koch", "label": "Pauline Koch", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Luitpold-Gymnasium M\u00fcnchen", "label": "Luitpold-Gymnasium M\u00fcnchen", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Satyendra Nath Bose", "label": "Satyendra Nath Bose", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Kaiser Wilhelm Society", "label": "Kaiser Wilhelm Society", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Zurich", "label": "Zurich", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Manhattan Project", "label": "Manhattan Project", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Ulm", "label": "Ulm", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Nobel Prize in Physics", "label": "Nobel Prize in Physics", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Kingdom of Prussia", "label": "Kingdom of Prussia", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Humboldt-Universit\u00e4t zu Berlin", "label": "Humboldt-Universit\u00e4t zu Berlin", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Bern", "label": "Bern", "shape": "dot", "size": 20}, {"color": "#FF6B6B", "font": {"color": "white"}, "id": "Marie Curie", "label": "Marie Curie", "shape": "dot", "size": 30}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Pierre Curie", "label": "Pierre Curie", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Warsaw", "label": "Warsaw", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Nobel Prize", "label": "Nobel Prize", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Bronis\u0142awa D\u0142uska", "label": "Bronis\u0142awa D\u0142uska", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "J\u00f3zef Sk\u0142odowski", "label": "J\u00f3zef Sk\u0142odowski", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Maria", "label": "Maria", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Henri Becquerel", "label": "Henri Becquerel", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "W\u0142adys\u0142aw Sk\u0142odowski", "label": "W\u0142adys\u0142aw Sk\u0142odowski", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Maria Sklodowska-Curie National Research Institute of Oncology", "label": "Maria Sklodowska-Curie National Research Institute of Oncology", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Congress Poland", "label": "Congress Poland", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Sancellemoz", "label": "Sancellemoz", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Paris", "label": "Paris", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Passy", "label": "Passy", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Mania", "label": "Mania", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "\u00c8ve Curie", "label": "\u00c8ve Curie", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Poland", "label": "Poland", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "France", "label": "France", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Bronia", "label": "Bronia", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "J\u00f3zio", "label": "J\u00f3zio", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Haute-Savoie", "label": "Haute-Savoie", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Zofia", "label": "Zofia", "shape": "dot", "size": 20}, {"color": "#FF6B6B", "font": {"color": "white"}, "id": "Isaac Newton", "label": "Isaac Newton", "shape": "dot", "size": 30}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Lucasian Professor of Mathematics", "label": "Lucasian Professor of Mathematics", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Charles Marie de La Condamine", "label": "Charles Marie de La Condamine", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Alexis Clairaut", "label": "Alexis Clairaut", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Woolsthorpe Manor", "label": "Woolsthorpe Manor", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Hannah Ayscough", "label": "Hannah Ayscough", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Gottfried Wilhelm Leibniz", "label": "Gottfried Wilhelm Leibniz", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Barnabas Smith", "label": "Barnabas Smith", "shape": "dot", "size": 20}, {"color": "#4ECDC4", "font": {"color": "white"}, "id": "Lincolnshire", "label": "Lincolnshire", "shape": "dot", "size": 20}]);
+                  edges = new vis.DataSet([{"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.99705565, "to": "Albert Einstein", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.99636626, "to": "Hermann Einstein", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.9887445, "to": "Elektrotechnische Fabrik J. Einstein \u0026 Cie", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.98588127, "to": "Switzerland", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.98554784, "to": "German Empire", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.9845109, "to": "Munich", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.97569376, "to": "Kingdom of W\u00fcrttemberg", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.96605146, "to": "Pauline Koch", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.9642718, "to": "Luitpold-Gymnasium M\u00fcnchen", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.94803375, "to": "Satyendra Nath Bose", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.9398604, "to": "Kaiser Wilhelm Society", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.9239556, "to": "Zurich", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.92090285, "to": "Manhattan Project", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.90879, "to": "Ulm", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.90583324, "to": "Nobel Prize in Physics", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.89570993, "to": "Kingdom of Prussia", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.88716584, "to": "Humboldt-Universit\u00e4t zu Berlin", "width": 1}, {"entity_type": "Entity", "from": "Albert Einstein", "salience": 0.8728513, "to": "Bern", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.99457985, "to": "Pierre Curie", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.9942274, "to": "Warsaw", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.99200463, "to": "Nobel Prize", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.9908115, "to": "Bronis\u0142awa D\u0142uska", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.99032116, "to": "Marie Curie", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.98546696, "to": "J\u00f3zef Sk\u0142odowski", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.98388606, "to": "Maria", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.970384, "to": "Henri Becquerel", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.9691591, "to": "W\u0142adys\u0142aw Sk\u0142odowski", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.9664777, "to": "Maria Sklodowska-Curie National Research Institute of Oncology", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.96245474, "to": "Congress Poland", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.96201146, "to": "Sancellemoz", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.9596461, "to": "Paris", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.9550567, "to": "Passy", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.94586635, "to": "Mania", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.94416434, "to": "\u00c8ve Curie", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.94391876, "to": "Poland", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.93133056, "to": "France", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.92926615, "to": "Bronia", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.92745197, "to": "J\u00f3zio", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.90839773, "to": "Haute-Savoie", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.8883552, "to": "Zofia", "width": 1}, {"entity_type": "Entity", "from": "Marie Curie", "salience": 0.8826811, "to": "Nobel Prize in Physics", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.9841773, "to": "Lucasian Professor of Mathematics", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.9841493, "to": "Isaac Newton", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.9835515, "to": "Charles Marie de La Condamine", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.9754413, "to": "Alexis Clairaut", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.96983, "to": "Woolsthorpe Manor", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.96600634, "to": "Hannah Ayscough", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.9464357, "to": "Gottfried Wilhelm Leibniz", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.8804763, "to": "Barnabas Smith", "width": 1}, {"entity_type": "Entity", "from": "Isaac Newton", "salience": 0.8757862, "to": "Lincolnshire", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
