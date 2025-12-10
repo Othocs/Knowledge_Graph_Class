@@ -1,0 +1,171 @@
+{
+  "accuracy": 10.0,
+  "exact_matches": 1,
+  "partial_matches": 1,
+  "incorrect": 18,
+  "total_time": 14.204334259033203,
+  "selected_indices": [
+    7296,
+    1639,
+    18024,
+    16049,
+    14628,
+    9144,
+    6717,
+    35741,
+    5697,
+    38698,
+    27651,
+    2082,
+    1952,
+    6140,
+    14328,
+    15247,
+    33118,
+    39453,
+    1739,
+    36781
+  ],
+  "results": [
+    {
+      "question": "After a 60-year-old man underwent a successful orthotopic liver transplantation, the transplanted liver exhibited poor function and produced minimal bile for the first 3 days. This poor graft function is thought to result from 'reperfusion injury.' What substance is most likely responsible for causing reperfusion injury in the transplanted liver?",
+      "ground_truth": "Reactive oxygen species",
+      "prediction": "Free oxygen radicals produced by the ischemic hepatocytes.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "In a 37-year-old female patient with a fractured clavicle where the junction of the inner and middle third of the bone shows overriding of the medial and lateral fragments, and the arm is rotated medially but not laterally, what medical condition is likely to occur as a complication of this fracture?",
+      "ground_truth": "Thrombosis of the subclavian vein, causing a pulmonary embolism",
+      "prediction": "Neurological injury of the brachial plexi due to fracture of the clavicle.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "In which condition does the antagonism of histamine by H1 antihistaminics not afford any benefit?",
+      "ground_truth": "Common cold",
+      "prediction": "Asthma in children.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "A 74-year-old man has a 1.5-centimeter, faintly erythematous, raised lesion with irregular borders on his right forearm. A biopsy is performed. What histopathological feature would most consistently indicate carcinoma in situ for this skin lesion?",
+      "ground_truth": "Irreversible nuclear changes in the stratum basale",
+      "prediction": "Hyperkeratosis and hyperpigmentation of the epidermis with a sharp demarcation line between the lesion and normal skin.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "A 24-year-old male presents to the psychiatry emergency department with symptoms of excitement, grandiosity, lack of sleep for two days, and unusual dressing. He claims to be highly accomplished in medicine and is attempting to discover a rapid way to reach the moon. Based on these symptoms, what is the drug of choice for managing his condition?",
+      "ground_truth": "Risperidone",
+      "prediction": "Risperidone.",
+      "correct": true,
+      "match_type": "exact"
+    },
+    {
+      "question": "An 18-year-old pregnant woman, who is 10 weeks along, presents at her first prenatal visit reporting nausea with occasional vomiting but no bleeding or abdominal pain. Her laboratory studies show no abnormalities, except for a urine culture growing more than 100,000 CFU of pan-sensitive E. coli. What is the appropriate course of treatment for her urinary tract infection?",
+      "ground_truth": "Treat with nitrofurantoin for seven days.",
+      "prediction": "Vancomycin + Trimethoprim + Levofloxacin.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "A 40-year-old male presented with right loin pain referred to the right iliac fossa. After an ultrasound and a non-contrast CT of the kidneys, ureters, and bladder, a renal stone measuring 8mm was identified. Based on the symptomatology and the imaging findings, at what specific location in the urinary tract is the stone most likely to be found?",
+      "ground_truth": "Mid ureter",
+      "prediction": "Middle ureteric colic point (ureteric colic point) at the junction of the renal and ureteric pyelics.",
+      "correct": true,
+      "match_type": "partial"
+    },
+    {
+      "question": "What is the most common functioning pancreatic islet cell tumor?",
+      "ground_truth": "Insulinoma",
+      "prediction": "Islet cell tumor of the pancreas.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "In an MRI scan showing a transaxial section through the head, which structure may be obliterated by a pituitary tumor without being given options for identification?",
+      "ground_truth": "The optic chiasm.",
+      "prediction": "Optic chiasmata of the optic nerves are obliterated by a pituitary tumor.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "What artery is a direct branch of the gastroduodenal artery?",
+      "ground_truth": "Right gastroepiploic artery",
+      "prediction": "Common hepatic artery.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "A patient diagnosed with bronchiectasis has now presented with nephrotic syndrome. What is the most likely underlying condition causing this combination of symptoms?",
+      "ground_truth": "Amyloidosis",
+      "prediction": "Chronic liver disease and cirrhosis with portal hypertension.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "What is the most general term for the process by which the amount of active drugs in the body is reduced after absorption into the systematic circulation?",
+      "ground_truth": "Elimination",
+      "prediction": "Decrementation.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "A 7-year-old boy presents with developmental delay, intellectual disability, and a history of cerebral venous thrombosis and pulmonary embolism. Physical examination reveals bilateral downward and inward lens subluxation, a high-arched palate, and kyphosis. Laboratory studies indicate an increased serum concentration of 5-methyltetrahydrofolate. What additional serum finding is most likely present in this patient?",
+      "ground_truth": "Decreased methionine concentration",
+      "prediction": "Decreased serum level of 5-methyltetrahydrofolate and increased serum level of homocysteine.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "A 27-year-old male presents with a palpable mass in his scrotum and mild testicular pain. Upon physical examination, there is an abnormal appearance of the scrotum surrounding the left testis. What is the most likely cause of this condition based on the described symptoms and examination findings?",
+      "ground_truth": "Compression of the left renal vein at the aortic origin of the superior mesenteric artery",
+      "prediction": "Hydrocele of the testis.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "A farmer has a black mole on the cheek that has increased in size to more than 6mm with sharply defined borders and a central black lesion. What is the likely diagnosis?",
+      "ground_truth": "Superficial spreading melanoma",
+      "prediction": "Molluscum contagiosum.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "Which viruses are known to cause hemorrhagic fever?",
+      "ground_truth": "Lassa fever virus, Yellow fever virus, Crimean-Congo hemorrhagic fever virus",
+      "prediction": "HIV, Ebola, Lassa fever, Marburg fever, and Rift Valley fever.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "What is the name of the vertical crest found in the fundus of the internal auditory canal?",
+      "ground_truth": "Bill's bar",
+      "prediction": "Eustachian tube crest.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "What is the structure not involved in the Unhappy triad of O'Donoghue?",
+      "ground_truth": "Fibular collateral ligament",
+      "prediction": "Basal ganglia and thalamus.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "What is the most likely diagnosis for a 22-year-old woman who develops small itchy wheals after physical exertion, exposure to the sun, eating hot spicy food, and emotional stress?",
+      "ground_truth": "Cholinergic urticaria",
+      "prediction": "Anaphylaxis to histamine in mast cells.",
+      "correct": false,
+      "match_type": "no_match"
+    },
+    {
+      "question": "What is the most reliable feature indicating the malignant transformation of pheochromocytoma?",
+      "ground_truth": "Presence of metastasis to other organs",
+      "prediction": "Increase in plasma aldosterone and/or cortisol levels.",
+      "correct": false,
+      "match_type": "no_match"
+    }
+  ]
+}
